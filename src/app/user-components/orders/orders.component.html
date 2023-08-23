@@ -1,0 +1,117 @@
+<div class="container text-white my-4">
+  <h2 class="text-center">Bestellungen</h2>
+  <table class="table table-hover mt-4">
+    <thead>
+      <tr>
+        <th>Bestell Nr.</th>
+        <th>Gesamtpreis</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let order of orders | paginate : { itemsPerPage: 8, currentPage: p }
+        "
+        (click)="onOrderClick(order)"
+        style="cursor: pointer"
+      >
+        <td
+          [style.background-color]="
+            order.id === selectedOrderId ? 'orange' : '#f5f5f5'
+          "
+        >
+          {{ order.id }}
+        </td>
+        <td
+          [style.background-color]="
+            order.id === selectedOrderId ? 'orange' : '#f5f5f5'
+          "
+        >
+          {{ order.price.toFixed(2).replace(".", ",") }} €
+        </td>
+        <td
+          [style.background-color]="
+            order.id === selectedOrderId ? 'orange' : '#f5f5f5'
+          "
+        >
+          {{ formatDateTime(order.orderDate) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div
+    *ngIf="orders.length > 8"
+    class="d-flex justify-content-center custom-pagination mt-3"
+  >
+    <pagination-controls
+      (pageChange)="p = $event"
+      previousLabel="Vorherige"
+      nextLabel="Nächste"
+    ></pagination-controls>
+  </div>
+
+  <div class="mt-4 border rounded p-3 order-background" *ngIf="showdetails">
+    <h3 class="text-center">Details für Bestellnr.: {{ selectedOrderId }}</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Produkt ID:</th>
+          <th>Produkt:</th>
+          <th>Menge:</th>
+          <th>Preis/Stk:</th>
+          <th>Preis:</th>
+          <th>Verkäufer ID:</th>
+          <th>Status:</th>
+          <th>letzte Änderung:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredlist">
+          <td>{{ product.productid }}</td>
+          <td>{{ product.productname | slice : 0 : 40 }}...</td>
+          <td>{{ product.amount }}</td>
+          <td>{{ product.price.toFixed(2).replace(".", ",") }} €</td>
+          <td>
+            {{ (product.price * product.amount).toFixed(2).replace(".", ",") }}
+            €
+          </td>
+          <td>{{ product.sellerid }}</td>
+          <td class="text-center text-white">
+            <div
+              class="rounded status"
+              [style.background-color]="
+                product.status === 'Versendet'
+                  ? 'green'
+                  : product.status === 'bestellt'
+                  ? 'blue'
+                  : 'orange'
+              "
+            >
+              <strong>{{ product.status }}</strong>
+            </div>
+          </td>
+          <td>
+            {{ formatDateTime(product.updatedAt) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-hover mt-5">
+      <thead>
+        <tr>
+          <th class="h5 text-center">Gesamtmenge:</th>
+          <th class="h5 text-center">Gesamtkosten:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="h5 text-center">{{ totalamount }}</td>
+          <td class="h5 text-center">
+            {{ totalcosts.toFixed(2).replace(".", ",") }} €
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

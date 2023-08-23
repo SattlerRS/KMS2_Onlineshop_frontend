@@ -1,26 +1,432 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
-  <header class="jumbotron">
-    <h3>
-      <strong>{{ currentUser.username }}</strong> Profile
-    </h3>
-  </header>
-  <p>
-    <strong>Token:</strong>
-    {{ currentUser.accessToken.substring(0, 20) }} ...
-    {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
-  </p>
-  <p>
-    <strong>Email:</strong>
-    {{ currentUser.email }}
-  </p>
-  <strong>Roles:</strong>
-  <ul>
-    <li *ngFor="let role of currentUser.roles">
-      {{ role }}
-    </li>
-  </ul>
-</div>
+<div class="mt-4">
 
-<ng-template #loggedOut>
-  Please login.
-</ng-template>
+  <!-- Verkäufe Navigation -->
+  <div class="text-center m-4">
+    <button
+      *ngIf="sellerData"
+      [routerLink]="'/home'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Home
+    </button>
+    <button
+      *ngIf="sellerData"
+      [routerLink]="'/sel'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Produkte
+    </button>
+    <button
+      *ngIf="sellerData"
+      [routerLink]="'/addProduct'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Produkt hinzufügen
+    </button>
+    <button
+      *ngIf="sellerData"
+      [routerLink]="'/sel_dash'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Dashboard
+    </button>
+  </div>
+  <!-- Verkäufe Navigation Ende -->
+
+  <!-- Standart Profilinformationen -->
+  <div
+    class="container border rounded text-white p-2 background-profile"
+    *ngIf="currentUser; else loggedOut"
+  >
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-2 ml-2" style="font-size: 20px">
+          <strong>Profil:</strong> {{ currentUser.username }}
+        </p>
+        <p class="mb-2 ml-2" style="font-size: 20px">
+          <strong>ID:</strong> {{ currentUser.id }}
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p class="mb-2 ml-2" style="font-size: 20px">
+          <strong>Email:</strong> {{ currentUser.email }}
+        </p>
+        <p class="mb-2 ml-2" style="font-size: 20px">
+          <strong>Rechte: </strong>
+          <span style="font-size: 20px">{{ currentUser.roles[0] }}</span>
+        </p>
+
+        <!-- Passwort ändern -->
+        <!-- Button zum Anzeigen des Passwort-Änderungs-Modals -->
+        <button
+          class="btn btn-primary btn-custom"
+          data-bs-toggle="modal"
+          data-bs-target="#changePasswordModal"
+          *ngIf="sellerData || userData"
+        >
+          Passwort ändern
+        </button>
+
+        <!-- Modal Passwort ändern -->
+        <div
+          class="modal fade"
+          id="changePasswordModal"
+          tabindex="-1"
+          aria-labelledby="changePasswordModalLabel"
+          aria-hidden="true"
+          data-bs-backdrop="static"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="changePasswordModalLabel">
+                  Passwort ändern
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="resetPasswordChangeForm()"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="currentPassword" class="form-label"
+                      >Aktuelles Passwort</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="currentPassword"
+                      name="currentPassword"
+                      required
+                      [(ngModel)]="currentPassword"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="newPassword" class="form-label"
+                      >Neues Passwort (min. 8 Zeichen)</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="newPassword"
+                      name="newPassword"
+                      required
+                      minlength="8"
+                      [(ngModel)]="newPassword"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="confirmNewPassword" class="form-label"
+                      >Neues Passwort bestätigen</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="confirmNewPassword"
+                      name="confirmNewPassword"
+                      required
+                      minlength="8"
+                      [(ngModel)]="confirmNewPassword"
+                    />
+                    <!-- Fehlermeldung -->
+                    <div *ngIf="passwordMismatch" class="text-danger mt-2">
+                      {{ errortextPasword }}
+                    </div>
+                    <!-- Fehlermeldung  Ende-->
+
+                    <!-- Erfolgsmeldung -->
+                    <div
+                      *ngIf="passwordchangesuccess"
+                      class="text-success mt-2"
+                    >
+                      <strong>{{ successtext }}</strong>
+                    </div>
+                    <!-- Erfolgsmeldung Ende-->
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-custom"
+                  data-bs-dismiss="modal"
+                  (click)="resetPasswordChangeForm()"
+                >
+                  Zurück
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-custom"
+                  (click)="changePassword()"
+                  id="changePasswordButton"
+                >
+                  Passwort ändern
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Passwort ändern Ende -->
+        <!-- Passwort ändern Ende -->
+      </div>
+    </div>
+  </div>
+  <!-- Standart Profilinformationen Ende -->
+
+  <div class="container border rounded mt-4 pb-2 background-profile" *ngIf="sellerData || userData">
+    <h2 class="text-white">Daten zu ihrem Account:</h2>
+    <div class="row">
+      <!-- Seller Felder -->
+      <div class="col-md-6 mt-2" *ngIf="sellerData">
+        <div class="form-group">
+          <label class="text-white" for="shopname">Shop Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shopname"
+            [(ngModel)]="sellerData.shopname"
+            name="shopname"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="description">Beschreibung:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            [(ngModel)]="sellerData.description"
+            name="description"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="bankAccountNumber">Konto Nr.:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="bankAccountNumber"
+            [(ngModel)]="sellerData.bankaccountnumber"
+            name="bankAccountNumber"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="tel">Telefon Nr.:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tel"
+            [(ngModel)]="sellerData.tel"
+            name="tel"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="street">Straße:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="street"
+            [(ngModel)]="sellerData.street"
+            name="street"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="zip">PLZ:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="zip"
+            [(ngModel)]="sellerData.zip"
+            name="zip"
+            [disabled]="!isEditing"
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mt-2" *ngIf="sellerData">
+        <div class="form-group">
+          <label class="text-white" for="city">Ort:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="city"
+            [(ngModel)]="sellerData.city"
+            name="city"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="image">Profilbild:</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            (change)="onImageSelected($event)"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div>
+          <img
+            *ngIf="selectedImageSeller"
+            [src]="selectedImageSeller"
+            alt="Ausgewähltes Bild"
+            class="img-fluid rounded"
+            style="height: 280px"
+          />
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button
+            type="button"
+            class="btn btn-primary btn-custom"
+            (click)="toggleEdit()"
+            *ngIf="!isEditing"
+          >
+            Bearbeiten
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary btn-custom"
+            (click)="submitForm()"
+            *ngIf="isEditing"
+          >
+            Speichern
+          </button>
+        </div>
+      </div>
+
+      <!-- Seller Felder Ende -->
+
+      <!-- User Felder -->
+
+      <div class="col-md-6 mt-2" *ngIf="userData">
+        <div class="form-group">
+          <label class="text-white" for="fristname">Vorname:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fristname"
+            [(ngModel)]="userData.firstName"
+            name="fristname"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="lastname">Nachname:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastname"
+            [(ngModel)]="userData.lastName"
+            name="lastname"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="street">Straße:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="street"
+            [(ngModel)]="userData.street"
+            name="street"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="city">Ort:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="city"
+            [(ngModel)]="userData.city"
+            name="city"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="postalCode">PLZ:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="postalCode"
+            [(ngModel)]="userData.postalCode"
+            name="postalCode"
+            [disabled]="!isEditing"
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mt-2" *ngIf="userData">
+        <div class="form-group">
+          <label class="text-white" for="birthdate">Geburtsdatum:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="birthdate"
+            [(ngModel)]="userData.birthdate"
+            name="birthdate"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="phoneNumber">Tel.:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phoneNumber"
+            [(ngModel)]="userData.phoneNumber"
+            name="phoneNumber"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="image">Profilbild:</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            (change)="onImageSelected($event)"
+            [disabled]="!isEditing"
+          />
+        </div>
+        <div>
+          <img
+            *ngIf="selectedImageUser"
+            [src]="selectedImageUser"
+            alt="Ausgewähltes Bild"
+            class="img-fluid rounded"
+            style="height: 280px"
+          />
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button
+            type="button"
+            class="btn btn-primary btn-custom"
+            (click)="toggleEdit()"
+            *ngIf="!isEditing"
+          >
+            Bearbeiten
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary btn-custom"
+            (click)="submitForm()"
+            *ngIf="isEditing"
+          >
+            Speichern
+          </button>
+        </div>
+      </div>
+      <!-- User Felder Ende-->
+    </div>
+  </div>
+
+  <ng-template #loggedOut>Please login.</ng-template>
+</div>

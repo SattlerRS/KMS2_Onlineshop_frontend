@@ -1,5 +1,183 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+<div
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 80vh"
+>
+  <!-- Standart Content -->
+  <div class="container text-center" *ngIf="!loggedIn">
+    <h1 class="text-white h1-size">Willkommen in unserem Shop!</h1>
+    <br />
+    <br />
+    <h3 class="text-white">
+      Die folgenden Möglichkeiten stehen zur Verfügung:
+    </h3>
+    <div class="container d-flex flex-column align-items-center">
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/login"
+        >
+          Login
+        </button>
+      </div>
+      <div class="row mt-5">
+        <h4 class="text-white">Registrieren:</h4>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-2 btn-width btn-custom"
+          routerLink="/register"
+        >
+          Kunde
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/register_as_seller"
+        >
+          Verkäufer
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Standart Content End-->
+
+  <!-- User Content -->
+  <div class="container text-center" *ngIf="showUserContent">
+    <h1 class="text-white h1-size">Willkommen {{ user.username }}!</h1>
+    <br />
+    <br />
+    <h3 class="text-white">
+      Die folgenden Möglichkeiten stehen zur Verfügung:
+    </h3>
+    <div class="container d-flex flex-column align-items-center">
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/user"
+        >
+          <i class="bi bi-shop"></i> Shop
+        </button>
+      </div>
+
+      <div class="row" *ngIf="card.length > 0">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/card"
+        >
+          <i class="bi bi-cart"></i> Warenkorb
+        </button>
+      </div>
+
+      <div class="row" *ngIf="watchlist.length > 0">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/watchlist"
+        >
+          <i class="bi bi-bookmark-star"></i> Merkliste
+        </button>
+      </div>
+
+      <div class="row" *ngIf="orders.length > 0">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/orders"
+        >
+          <i class="bi bi-clipboard-check"></i> Bestellungen
+        </button>
+      </div>
+
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/profile"
+        >
+          <i class="bi bi-person"></i> Profil
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- User Content Ende-->
+
+  <!-- Seller Content -->
+  <div class="container text-center" *ngIf="showSellerContent">
+    <h1 class="text-white h1-size">Willkommen {{ user.username }}!</h1>
+    <br />
+    <br />
+    <h3 class="text-white">
+      Die folgenden Möglichkeiten stehen zur Verfügung:
+    </h3>
+    <div class="container d-flex flex-column align-items-center">
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/sel"
+        >
+          <i class="bi bi-bag"></i> Produkte
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/addProduct"
+        >
+          <i class="bi bi-file-plus"></i> Produkt hinzufügen
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/sel_dash"
+        >
+          <i class="bi bi-card-heading"></i> Dashboard
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/profile"
+        >
+          <i class="bi bi-person"></i> Profil
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Seller Content Ende-->
+
+  <!-- Admin Content -->
+  <div class="container text-center" *ngIf="showAdminContent">
+    <h1 class="text-white h1-size">Willkommen Herr Admin!</h1>
+    <br />
+    <br />
+    <h3 class="text-white">
+      Die folgenden Möglichkeiten stehen zur Verfügung:
+    </h3>
+    <div class="container d-flex flex-column align-items-center">
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/admin"
+        >
+          <i class="bi bi-gear"></i> Produkte freigeben
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/lockProducts"
+        >
+          <i class="bi bi-lock"></i> Produkte sperren
+        </button>
+      </div>
+      <div class="row">
+        <button
+          class="btn btn-primary btn-lg mt-4 btn-width btn-custom"
+          routerLink="/admin_newsletter"
+        >
+          <i class="bi bi-envelope"></i> Newsletter
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Admin Content Ende-->
 </div>

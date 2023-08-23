@@ -1,0 +1,173 @@
+<div>
+
+  <!-- Navigation -->
+  <div class="text-center m-4">
+    <button [routerLink]="'/home'" class="btn btn-primary mx-2 btn-custom">
+      Home
+    </button>
+    <button [routerLink]="'/sel'" class="btn btn-primary mx-2 btn-custom">
+      Produkte
+    </button>
+    <button
+      [routerLink]="'/addProduct'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Produkt hinzufügen
+    </button>
+
+    <button [routerLink]="'/profile'" class="btn btn-primary mx-2 btn-custom">
+      Zum Profil
+    </button>
+  </div>
+  <!-- Navigation Ende-->
+
+  <!-- Übersicht -->
+  <div class="container">
+    <div class="text-white text-center border rounded py-4 background-dashboarddetails">
+      <h2>aktueller Gesamtumsatz:</h2>
+      <h2>
+        <strong class="orangered text-decoration-underline">
+          {{ calculateTotalRevenue() }} €</strong
+        >
+      </h2>
+      <h2>verkaufte Produkte:</h2>
+      <h2>
+        <strong class="orangered"> {{ claculateTotalSoldProducts() }}</strong>
+      </h2>
+    </div>
+  </div>
+  <!-- Übersicht Ende -->
+
+  <!-- Umsatz Chart -->
+  <div class="container mt-4">
+    <button (click)="showChartOnScreen()" class="btn btn-custom btn-block" type="button" data-toggle="collapse" data-target="#chartCollapse">
+      {{showCartBtnText}}
+    </button>
+    <div class="collapse mt-4" id="chartCollapse">
+      <div >
+        <div class="card-body">
+          <div class="container" style="height: 400px">
+            <canvas class="chart rounded p-4" #myChart></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Umsatz Chart Ende -->
+
+  <!-- Bestellungen -->
+  <div class="container mt-5">
+    <h2 class="text-white text-center mb-4">Ihre aktuellen Bestellungen</h2>
+    <div class="row">
+      <div class="col">
+        <div class="btn-group">
+          <button class="btn btn-primary" (click)="filterOrders('bestellt')">
+            bestellt
+          </button>
+          <button
+            class="btn btn-success"
+            (click)="filterOrders('in Bearbeitung')"
+          >
+            bearbeitet
+          </button>
+          <button class="btn btn-danger" (click)="filterOrders('Versendet')">
+            versendet
+          </button>
+        </div>
+        <button
+          *ngIf="showResetFilterBtn"
+          class="btn btn-secondary ml-5"
+          (click)="resetFilter()"
+        >
+          Filter löschen
+        </button>
+      </div>
+
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Suche nach Bestellnummer"
+          [(ngModel)]="searchTerm"
+          (input)="applySearchFilter()"
+        />
+      </div>
+    </div>
+
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th scope="col">Bestell Nr.:</th>
+          <th scope="col">Bestell Datum:</th>
+          <th scope="col">Produkt ID:</th>
+          <th scope="col">Produktname:</th>
+          <th scope="col">Menge:</th>
+          <th scope="col">Preis/Stk:</th>
+          <th scope="col">Gesamtpreis:</th>
+          <th scope="col">Status:</th>
+          <th scope="col">Bearbeiten:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let order of filteredOrders
+              | paginate : { itemsPerPage: 10, currentPage: p }
+          "
+        >
+          <th scope="row">{{ order.orderid }}</th>
+          <td>{{ formatDateTime(order.createdAt) }}</td>
+          <td>{{ order.productid }}</td>
+          <td>{{ order.productname }}</td>
+          <td>{{ order.amount }}</td>
+          <td class="text-right">
+            {{ order.productprice.toFixed(2).replace(".", ",") }} €
+          </td>
+          <td class="text-right">
+            {{
+              (order.amount * order.productprice).toFixed(2).replace(".", ",")
+            }}
+            €
+          </td>
+          <td class="text-center">
+            {{ order.status }}
+          </td>
+          <td>
+            <button
+              (click)="changeStatus(order.id, 'in Bearbeitung')"
+              *ngIf="order.status === 'bestellt'"
+              class="btn btn-primary btn-sm btn-block p-1"
+            >
+              bearbeiten
+            </button>
+            <button
+              (click)="changeStatus(order.id, 'Versendet')"
+              *ngIf="order.status === 'in Bearbeitung'"
+              class="btn btn-success btn-sm btn-block p-1"
+            >
+              versenden
+            </button>
+            <button
+              (click)="changeStatus(order.id, 'bestellt')"
+              *ngIf="order.status === 'Versendet'"
+              class="btn btn-danger btn-sm btn-block p-1"
+            >
+              reset
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pageination -->
+    <div *ngIf="filteredOrders.length > 10" class="d-flex justify-content-center custom-pagination">
+      <pagination-controls
+        (pageChange)="p = $event"
+        previousLabel="Vorherige"
+        nextLabel="Nächste"
+      ></pagination-controls>
+    </div>
+    <!-- Pageination Ende -->
+  </div>
+  <!-- Bestellungen Ende-->
+</div>

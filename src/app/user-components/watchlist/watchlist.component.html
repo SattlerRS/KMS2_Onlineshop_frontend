@@ -1,0 +1,62 @@
+<div class="container mt-4" *ngIf="watchlist">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center text-white">Ihre Merkliste enhält:</h2>
+      <div *ngFor="let item of watchlist" class="card m-3">
+        <div class="row g-0">
+          <div class="col-md-2">
+            <a [routerLink]="'/showProduct/' + item.product.id">
+              <img
+                src="{{ item.product.images.split(',')[0].trim() }}"
+                class="img-fluid rounded-start imgcheckout-size m-2"
+                alt="Produktbild"
+              />
+            </a>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title fs-6">
+                <a
+                  routerLink="/showProduct/{{ item.product.id }}"
+                  class="product-link"
+                >
+                  {{ item.product.productname }}
+                </a>
+              </h5>
+              <p class="card-text fs-7 mb-1 text-checkout">
+                {{ item.product.productdescription }}
+              </p>
+              <p class="card-text fs-7 mb-1 text-checkout">
+                Preis:
+                {{ item.product.productprice.toFixed(2).replace(".", ",") }} €
+              </p>
+              <p class="card-text fs-7 mb-1 text-checkout">
+                Menge: {{ item.product.productamount }} Stück
+              </p>
+              <p class="card-text fs-7 mb-1 text-checkout">
+                Verkäufer ID: {{ item.product.sellerid }}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card-body">
+              <button
+                class="btn btn-danger btn-custom ml-2"
+                (click)="addToCart(item)"
+              >
+                <span class="bi bi-cart-fill" aria-hidden="true"></span>
+              </button>
+              <button
+                class="btn btn-danger btn-custom ml-2"
+                (click)="removeFromWatchlist(item)"
+              >
+                <span class="bi bi-trash" aria-hidden="true"></span>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

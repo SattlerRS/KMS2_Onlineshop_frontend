@@ -1,0 +1,339 @@
+<!-- AddToCardBanner -->
+<div class="container-fluid">
+  <div class="row">
+    <div
+      *ngIf="showSuccessMessage"
+      class="col d-flex justify-content-center mt-3"
+    >
+      <div
+        class="banner rounded d-flex justify-content-center align-items-center"
+      >
+        <h5 class="m-0 text-white">
+          Artikel wurde zum
+          <a class="link" routerLink="/card">Warenkorb</a> hinzugefügt
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- AddToCardBanner Ende-->
+
+<!-- AddToWatchlistBanner -->
+<div class="container-fluid">
+  <div class="row">
+    <div
+      *ngIf="showSuccessMessageWatchlist"
+      class="col d-flex justify-content-center mt-3"
+    >
+      <div
+        class="banner rounded d-flex justify-content-center align-items-center"
+      >
+        <h5 class="m-0 text-white">
+          Artikel wurde zur
+          <a class="link" routerLink="/watchlist">Merkliste</a> hinzugefügt
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- AddToWatchlistBanner Ende-->
+
+<div class="container mt-4">
+  <div>
+    <h2 class="text-white">Detailansicht zum Produkt</h2>
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <!-- Linke Spalte: Großes Bild und kleine Bilder -->
+        <div class="row">
+          <div class="col-md-12">
+            <img
+              [src]="startImage"
+              class="img-fluid imgsize"
+              alt="Großes Bild"
+            />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div
+            class="col-md-3 border p-1 m-1"
+            *ngFor="let image of product.images"
+          >
+            <img
+              [src]="image"
+              class="img-fluid thumbnail"
+              alt="Kleines Bild 1"
+              (click)="selectImage(image)"
+              style="cursor: pointer"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- Rechte Spalte: Produktinformationen -->
+      <div class="col-md-6 text-white showproduct-custom">
+        <h3 class="p-2">{{ product.productname }}</h3>
+        <div class="row mt-4 p-2">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Produkt ID:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ product.productid }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Beschreibung:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ product.productdescription }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Kategorie:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ product.productcategorie }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Preis:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>
+                  {{
+                    product.productprice
+                      ? product.productprice.toFixed(2).replace(".", ",") + " €"
+                      : "N/A"
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Lagerstand:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ product.productamount }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Bereits verkauft:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <p>{{ product.sold }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Verkäufer:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <a
+                  class="seller-link"
+                  [routerLink]="'/showSeller/' + product.sellerid"
+                >
+                  <p>
+                    <strong>{{ sellerdetails.shopname }}</strong>
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>Bewertung:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <!-- Sternebewertung -->
+                <div>
+                  <a class="rating-custom" (click)="goToRatings()">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]">
+                      <i *ngIf="star > product.rating" class="bi bi-star"></i>
+                      <i
+                        *ngIf="star <= product.rating"
+                        class="bi bi-star-fill"
+                      ></i>
+                    </span>
+                    <span class="ml-3"> ({{ ratings.length }})</span>
+                  </a>
+                </div>
+
+                <!-- Sternebewertung Ende-->
+              </div>
+            </div>
+
+            <div class="row mt-5">
+              <div class="col-md-4">
+                <p for="productQuantity"><strong>Menge auswählen:</strong></p>
+              </div>
+              <div class="col-md-6">
+                <select
+                  class="form-control"
+                  id="productQuantity"
+                  [(ngModel)]="selectedQuantity"
+                >
+                  <option
+                    *ngFor="
+                      let quantity of getQuantityOptions(product.productamount)
+                    "
+                    [value]="quantity"
+                  >
+                    {{ quantity }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-md-4">
+                <button
+                  class="btn btn-primary btn-custom"
+                  [routerLink]="'/user'"
+                >
+                  Zurück
+                </button>
+              </div>
+
+              <div class="col-md-6 d-flex align-items-center">
+                <button
+                  class="btn btn-primary btn-custom"
+                  (click)="addToCard()"
+                  [disabled]="selectedQuantity == 0"
+                >
+                  <span class="bi bi-cart-fill mr-2"></span>Warenkorb
+                </button>
+
+                <!-- Merkliste Button -->
+                <button
+                  class="btn btn-danger ml-2 btn-custom watchlist-button"
+                  [disabled]="isInWatchlist(product)"
+                  (click)="addToWatchlist(product)"
+                >
+                  <span
+                    class="bi text-danger mr-2"
+                    [ngClass]="{
+                      'bi-heart': !isInWatchlist(product),
+                      'bi-heart-fill': isInWatchlist(product)
+                    }"
+                  ></span>
+                  Merkliste
+                </button>
+                <!-- Merkliste Button Ende -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <!-- Bewertungen -->
+    <div id="ratings" class="text-white">
+      <div class="d-flex mt-5">
+        <h2 class="text-white mr-auto">Bewertungen</h2>
+        <button
+          class="btn btn-primary btn-custom m-2"
+          *ngIf="showRatingBtn"
+          (click)="toggleAddRating()"
+        >
+          Bewertung hinzufügen
+        </button>
+      </div>
+
+      <!-- Rating hinzufügen -->
+      <div class="text-white" *ngIf="showAddRating">
+        <div class="form-group">
+          <div class="stars">
+            <span
+              class="text-orange"
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+              (click)="userRating.rating = star"
+            >
+              <i *ngIf="star > userRating.rating" class="bi bi-star"></i>
+              <i *ngIf="star <= userRating.rating" class="bi bi-star-fill"></i>
+            </span>
+            <span class="text-danger" *ngIf="showAddRatingError"
+              ><strong> *</strong></span
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="headerInput"
+            >Überschrift:<span class="text-danger" *ngIf="showAddRatingError"
+              ><strong> *</strong></span
+            ></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="headerInput"
+            [(ngModel)]="userRating.header"
+          />
+        </div>
+        <div class="form-group">
+          <label for="textInput"
+            >Text:<span class="text-danger" *ngIf="showAddRatingError"
+              ><strong> *</strong></span
+            >
+          </label>
+          <textarea
+            class="form-control"
+            id="textInput"
+            rows="5"
+            [(ngModel)]="userRating.text"
+          ></textarea>
+        </div>
+      </div>
+      <!-- Rating hinzufügen Ende-->
+
+      <!-- Ratings -->
+      <div class="border-top pt-3 bg-ratings" *ngIf="ratings.length > 0">
+        <div
+          class="container border rounded p-3 mb-3"
+          *ngFor="
+            let rating of ratings
+              | paginate : { itemsPerPage: 3, currentPage: p }
+          "
+        >
+          <div class="user-info">
+            <p>{{ rating.user.username }}</p>
+          </div>
+          <div class="date">
+            <p>{{ formatDateTime(rating.createdAt) }}</p>
+          </div>
+          <div class="stars">
+            <div class="text-orange">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]">
+                <i *ngIf="star > rating.rating" class="bi bi-star"></i>
+                <i *ngIf="star <= rating.rating" class="bi bi-star-fill"></i>
+              </span>
+            </div>
+          </div>
+          <div class="header">
+            <p>
+              <strong>{{ rating.header }}</strong>
+            </p>
+          </div>
+          <div class="text">
+            <p>{{ rating.text }}</p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex justify-content-center custom-pagination"
+        *ngIf="ratings.length > 3"
+      >
+        <pagination-controls
+          (pageChange)="p = $event"
+          previousLabel="Vorherige"
+          nextLabel="Nächste"
+        ></pagination-controls>
+      </div>
+      <!-- Ratings Ende-->
+    </div>
+
+    <!-- Bewertungen Ende-->
+  </div>
+</div>

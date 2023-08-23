@@ -1,0 +1,207 @@
+<!-- AddToCardBanner -->
+<div class="container-fluid">
+  <div class="row">
+    <div *ngIf="showCardBanner" class="col d-flex justify-content-center mt-3">
+      <div
+        class="banner rounded d-flex justify-content-center align-items-center"
+      >
+        <h5 class="m-0 text-white">
+          <p class="orange">{{ productCardBanner }}</p> wurde zum
+          <a class="link" routerLink="/card">Warenkorb</a> hinzugefügt
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- AddToCardBanner Ende-->
+
+<!-- AddToWatchlistBanner -->
+<div class="container-fluid">
+  <div class="row">
+    <div
+      *ngIf="showWatchlistBanner"
+      class="col d-flex justify-content-center mt-3"
+    >
+      <div
+        class="banner rounded d-flex justify-content-center align-items-center"
+      >
+        <h5 class="m-0 text-white">
+          <p class="orange">{{ productWatchlistBanner }}</p>
+          wurde zur
+          <a class="link" routerLink="/watchlist">Merkliste</a> hinzugefügt
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- AddToWatchlistBanner Ende-->
+
+<div>
+  <!-- Verkäuferdaten -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 text-white text-center">
+        <h1 class="mb-5">{{ sellerdetails.shopname }}</h1>
+        <img
+          class="img-fluid rounded-circle seller-profil-img"
+          [src]="sellerdetails.image"
+          alt="Verkäuferbild"
+        />
+      </div>
+      <div class="col-md-6 text-white mt-5">
+        <div class="row">
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Beschreibung:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">{{ sellerdetails.description }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Verkäufer ID:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">{{ seller.id }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Username:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">{{ seller.username }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Email:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">{{ seller.email }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Tel.:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">{{ sellerdetails.tel }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Ort:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">
+                {{ sellerdetails.street }}, {{ sellerdetails.zip }}
+                {{ sellerdetails.city }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p class="seller-description"><strong>Verkäufer seit:</strong></p>
+            </div>
+            <div class="col-md-6">
+              <p class="seller-description">
+                {{ formatDateTime(sellerdetails.createdAt) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Verkäuferdaten Ende -->
+
+  <!-- Verkäuferprodukte -->
+   <div class="mt-4 pb-4">
+  <h3 class="text-center text-white">Produkte von {{this.sellerdetails.shopname}}:</h3>
+  <div class="container mt-2 border rounded p-2 mb-2">
+    <div class="row">
+      <!-- Produkte Card -->
+      <div class="col-md-3" *ngFor="let product of products | paginate : { itemsPerPage: 4, currentPage: p }" >
+        <div class="card mt-2">
+          <img
+            [src]="product.images[0]"
+            class="card-img-top p-2"
+            style="object-fit: contain"
+            alt="Product Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title mb-1">
+              {{ product.productname.substring(0, 36) }}...
+            </h5>
+            <p class="card-text m-0">
+              Preis: {{ product.productprice.toFixed(2).replace(".", ",") }} €
+            </p>
+            <p class="card-text m-0">
+              Menge: {{ product.productamount }} Stück
+            </p>
+            <p class="card-text m-0">
+              Beschr: {{ product.productdescription.substring(0, 50) }}...
+            </p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <!-- Sternebewertung -->
+              <a [routerLink]="'/showProduct/' + product.id">
+                <div class="text-orange rating-custom">
+                  <span *ngFor="let star of [1, 2, 3, 4, 5]">
+                    <i *ngIf="star > product.rating" class="bi bi-star"></i>
+                    <i
+                      *ngIf="star <= product.rating"
+                      class="bi bi-star-fill"
+                    ></i>
+                  </span>
+                </div>
+              </a>
+              <!-- Sternebewertung Ende-->
+              <div>
+                <button
+                  class="btn btn-danger mr-2 btn-custom watchlist-button"
+                  [disabled]="isInWatchlist(product)"
+                  (click)="addToWatchlist(product)"
+                >
+                  <i
+                    class="bi text-danger"
+                    [ngClass]="{
+                      'bi-heart': !isInWatchlist(product),
+                      'bi-heart-fill': isInWatchlist(product)
+                    }"
+                  ></i>
+                </button>
+                <button
+                  class="btn btn-primary btn-custom mr-2"
+                  (click)="addProductToCard(product)"
+                >
+                  <i class="bi bi-cart-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary btn-custom"
+                  (click)="showProduct(product)"
+                >
+                  <i class="bi bi-eye-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="products.length > 4" class="d-flex justify-content-center custom-pagination">
+        <pagination-controls
+          (pageChange)="p = $event"
+          previousLabel="Vorherige"
+          nextLabel="Nächste"
+        ></pagination-controls>
+      </div>
+      <!-- Produkte Card Ende-->
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- Verkäuferprodukte Ende-->
+</div>

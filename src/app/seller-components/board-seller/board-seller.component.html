@@ -1,0 +1,184 @@
+<div>
+  <!-- Navigation -->
+  <div class="text-center m-4">
+    <button [routerLink]="'/home'" class="btn btn-primary mx-2 btn-custom">
+      Home
+    </button>
+    <button
+      [routerLink]="'/addProduct'"
+      class="btn btn-primary mx-2 btn-custom"
+    >
+      Produkt hinzufügen
+    </button>
+    <button [routerLink]="'/sel_dash'" class="btn btn-primary mx-2 btn-custom">
+      Dashboard
+    </button>
+    <button [routerLink]="'/profile'" class="btn btn-primary mx-2 btn-custom">
+      Zum Profil
+    </button>
+    <button
+      *ngIf="showAmountBtn"
+      (click)="toggleShowZeroAmountProducts()"
+      class="btn btn-danger mx-2"
+    >
+      Lagerstand checken
+    </button>
+  </div>
+  <!-- Navigation Ende -->
+
+  <!-- Produkt Cards -->
+  <h2 class="text-center text-white">
+    Ihre aktuellen Produkte die zum Verkauf stehen:
+  </h2>
+  <div class="container mt-2 border rounded p-2 mb-2 container-products">
+    <div class="row">
+      <div class="mt-3">
+        <label class="text-white" for="filterText">Filter:</label>
+        <input
+          type="text"
+          id="filterText"
+          [(ngModel)]="filterText"
+          class="form-control"
+          placeholder="Suchbegriff"
+          (input)="applyFilter()"
+        />
+      </div>
+      <div
+        class="col-xxl-3 col-lg-4 col-md-6 col-sm-12"
+        *ngFor="
+          let product of filteredproducts
+            | paginate : { itemsPerPage: itemsPerPage, currentPage: p }
+        "
+      >
+        <div
+          class="card mt-4"
+          [ngClass]="{ 'border-danger': product.productamount === 0 }"
+        >
+          <a style="cursor: pointer" (click)="editProduct(product)">
+            <img
+              [src]="product.images[0]"
+              class="card-img-top p-2"
+              style="object-fit: contain"
+              alt="Product Image"
+            />
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ product.productname.substring(0, 36) }}...
+            </h5>
+            <p class="card-text m-0">Preis: {{ product.productprice.toFixed(2).replace(".", ",") }} €</p>
+            <p class="card-text m-0">
+              Menge: {{ product.productamount }} Stück
+            </p>
+            <p class="card-text m-0">
+              Beschr: {{ product.productdescription.substring(0, 50) }}...
+            </p>
+            <div class="d-flex justify-content-end mt-3">
+              <i
+                *ngIf="!product.proofed"
+                class="bi bi-exclamation-triangle text-danger display-6 mr-3"
+                data-toggle="tooltip"
+                title="Dieses Produkt wurde vom Shopbetreiber noch nicht freigegeben!"
+                style="cursor: help;"
+              ></i>
+
+              <i
+                *ngIf="product.proofed"
+                class="bi bi bi-check-circle text-success display-6 mr-3"
+                data-toggle="tooltip"
+                title="Dieses Produkt wurde vom Shopbetreiber bereits freigegeben!"
+                style="cursor: help;"
+              ></i>
+
+              <button
+                class="btn btn-primary mr-2 btn-custom"
+                (click)="editProduct(product)"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <!-- Löschen button mit Popup -->
+              <button
+                type="button"
+                class="btn btn-primary btn-custom"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#exampleModal' + product.id"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+
+              <!-- Modal Produkt löschen-->
+              <div
+                class="modal fade"
+                [id]="'exampleModal' + product.id"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        {{ product.productname }}
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      Wollen sie das Produkt wirklich löschen?
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary btn-custom"
+                        data-bs-dismiss="modal"
+                      >
+                        Abbrechen
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-custom"
+                        (click)="deleteProduct(product)"
+                      >
+                        Löschen
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal Produkt löschen Ende-->
+              </div>
+              <!-- Löschen button mit Popup Ende-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div
+      *ngIf="filteredproducts.length > itemsPerPage"
+      class="d-flex justify-content-center custom-pagination mt-3"
+    >
+      <pagination-controls
+        (pageChange)="p = $event"
+        previousLabel="Vorherige"
+        nextLabel="Nächste"
+      ></pagination-controls>
+    </div>
+    <!-- Pagination Ende -->
+    <div class="d-flex justify-content-center text-white">
+      <div class="ml-3">
+        Produkte pro Seite:
+        <select [(ngModel)]="itemsPerPage" (change)="p = 1">
+          <option value="8">8</option>
+          <option value="16">16</option>
+          <option value="32">32</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

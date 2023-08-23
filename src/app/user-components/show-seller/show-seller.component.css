@@ -1,0 +1,52 @@
+.seller-profil-img{
+  max-width: 30vw !important;
+  max-height: 30vh !important;
+}
+
+.seller-description{
+    font-size: 1.8vh !important;
+}
+.card-img-top { 
+    height: 200px;
+}
+.bg-light-red {
+  background-color: rgba(255, 0, 0, 0.1); 
+}
+.rating-container {
+  cursor: pointer;
+}
+
+.text-orange {
+  color: orangered;
+}
+.watchlist-button {
+  pointer-events: auto;
+  opacity: 1;
+}
+.banner {
+  background-color: black;
+  border: 1px solid;
+  border-color: orange;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  z-index: 1000;
+  width: 40%;
+  height: 10vh;
+}
+
+.link{
+  color: orange !important;
+}
+.link:hover{
+  color: orangered !important;
+}
+
+.rating-custom{
+  color: orange;
+  text-decoration: none;
+  cursor: pointer;
+}
+.rating-custom:hover{
+  color: orangered;
+}

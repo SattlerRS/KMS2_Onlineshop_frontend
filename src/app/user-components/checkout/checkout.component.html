@@ -1,0 +1,421 @@
+<div class="container mt-5 mb-5" *ngIf="showsuccess === false">
+  <div class="row mt-3">
+    <div class="col text-center text-white">
+      <p
+        class="text-uppercase background-checkout-header"
+        [ngClass]="{ 'font-weight-bold': progress === 33.33 }"
+      >
+        Versanddetails
+      </p>
+    </div>
+    <div class="col text-center text-white">
+      <p
+        class="text-uppercase background-checkout-header"
+        [ngClass]="{ 'font-weight-bold': progress === 66.66 }"
+      >
+        Bezahlung
+      </p>
+    </div>
+    <div class="col text-center text-white">
+      <p
+        class="text-uppercase background-checkout-header"
+        [ngClass]="{ 'font-weight-bold': progress === 99.99 }"
+      >
+        Übersicht
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          [style.width]="progress + '%'"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <!-- Versanddetails -->
+    <div *ngIf="progress == 33.33">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="firstName"
+              >Vorname<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              [(ngModel)]="account.firstName"
+              name="firstName"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="lastName"
+              >Nachname<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              [(ngModel)]="account.lastName"
+              name="lastName"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="street"
+              >Straße<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="street"
+              [(ngModel)]="account.street"
+              name="street"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="city"
+              >Ort<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              [(ngModel)]="account.city"
+              name="city"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="postalCode"
+              >PLZ<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="postalCode"
+              [(ngModel)]="account.postalCode"
+              name="postalCode"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              [(ngModel)]="user.email"
+              name="email"
+              required
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="birthdate"
+              >Geburtsdatum<span class="text-danger">*</span></label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="birthdate"
+              [(ngModel)]="account.birthdate"
+              name="birthdate"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-white" for="phoneNumber"
+              >Telefonnummer<span class="text-danger">*</span></label
+            >
+            <input
+              type="tel"
+              class="form-control"
+              id="phoneNumber"
+              [(ngModel)]="account.phoneNumber"
+              name="phoneNumber"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="saveData"
+              [(ngModel)]="saveData"
+              name="saveData"
+            />
+            <label class="form-check-label text-white" for="saveData"
+              >Versanddaten speichern</label
+            >
+          </div>
+        </div>
+      </div>
+      <p class="text-danger" *ngIf="showOrderDetailsError">
+        Alle Felder müssen ausgefüllt sein!
+      </p>
+    </div>
+    <!-- Versanddetails Ende -->
+
+    <!-- Bezahlung -->
+    <div class="p-4 paying-custom" *ngIf="progress == 66.66">
+      <h3 class="text-white">Zahlungsmöglichkeiten</h3>
+      <div class="form-check mt-3 d-flex align-items-center">
+        <input
+          class="form-check-input"
+          style="cursor: pointer;"
+          type="radio"
+          name="paymentMethod"
+          id="creditCard"
+          [(ngModel)]="paymentMethod"
+          value="creditCard"
+          checked
+        />
+        <label class="form-check-label text-white fs-5 ml-3" style="cursor: pointer;" for="creditCard">
+          <i class="bi bi-credit-card-fill fs-3 mr-2"></i> Kreditkarte
+        </label>
+      </div>
+      <div class="form-check d-flex align-items-center">
+        <input
+          class="form-check-input"
+          style="cursor: pointer;"
+          type="radio"
+          name="paymentMethod"
+          id="paypal"
+          [(ngModel)]="paymentMethod"
+          value="paypal"
+        />
+        <label class="form-check-label text-white fs-5 ml-3" style="cursor: pointer;" for="paypal">
+          <i class="bi bi-paypal fs-3 mr-2"></i> Paypal
+        </label>
+      </div>
+      <p class="text-danger" *ngIf="showPaymentError">
+        Sie müssen eine Zahlungsmöglichkeit auswählen!
+      </p>
+    </div>
+    <!-- Bezahlung Ende-->
+
+    <!-- Übersicht -->
+    <div *ngIf="progress == 100">
+      <div>
+        <!-- Bestellübersicht -->
+        <div class="border my-4 background-checkout-card">
+          <h2 class="text-center mt-3 text-white">Bestellübersicht</h2>
+          <div *ngFor="let card of card.cards" class="card m-3">
+            <div class="row g-0">
+              <div class="col-md-2">
+                <a [routerLink]="'/showProduct/' + card.product.id">
+                  <img
+                    src="{{ card.product.images.split(',')[0].trim() }}"
+                    class="img-fluid rounded-start imgcheckout-size m-2"
+                    alt="Produktbild"
+                  />
+                </a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title fs-6">
+                    <a
+                      routerLink="/showProduct/{{ card.product.id }}"
+                      class="product-link"
+                    >
+                      {{ card.product.productname }}
+                    </a>
+                  </h5>
+                  <p class="card-text fs-7 mb-1 text-checkout">
+                    {{ card.product.productdescription }}
+                  </p>
+                  <p class="card-text fs-7 mb-1 text-checkout">
+                    Preis:
+                    {{ card.product.productprice.toFixed(2).replace(".", ",") }}
+                    €
+                  </p>
+                  <p class="card-text fs-7 mb-1 text-checkout">
+                    Menge: {{ card.amount }}
+                  </p>
+                  <p class="card-text fs-7 mb-1 text-checkout">
+                    Verkäufer ID: {{ card.product.sellerid }}
+                  </p>
+                  <!-- Weitere Informationen anzeigen -->
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-body">
+                  <button
+                    class="btn btn-danger ml-2"
+                    (click)="delFromCard(card)"
+                  >
+                    <span class="bi bi-trash" aria-hidden="true"></span>
+                  </button>
+                </div>
+                <label for="quantity">Menge ändern:</label>
+                <select
+                  class="ml-2"
+                  id="quantity"
+                  [(ngModel)]="newProductAmountOfCard"
+                  (change)="onQuantityChange($event, card)"
+                >
+                  <option
+                    *ngFor="let quantity of generateQuantityOptions(card)"
+                    [value]="quantity"
+                  >
+                    {{ quantity }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="text-center text-white">
+            <h3>
+              Summe ({{ productAmount }} Artikel):
+              <strong>{{ totalPrice.toFixed(2).replace(".", ",") }} €</strong>
+            </h3>
+          </div>
+        </div>
+        <!-- Bestellübersicht  Ende-->
+
+        <!-- Versanddetails -->
+        <div class="border my-4 background-checkout-delivery">
+          <h2 class="text-center mt-3 text-white">Versanddetails</h2>
+          <div class="border m-3 rounded">
+            <div class="row m-2">
+              <div class="col-md-6 text-white">
+                <p><strong>Vorname:</strong> {{ account.firstName }}</p>
+                <p><strong>Nachname:</strong> {{ account.lastName }}</p>
+                <p><strong>Straße:</strong> {{ account.street }}</p>
+                <p><strong>Stadt:</strong> {{ account.city }}</p>
+              </div>
+              <div class="col-md-6 text-white">
+                <p><strong>Postleitzahl:</strong> {{ account.postalCode }}</p>
+                <p><strong>E-Mail:</strong> {{ account.email }}</p>
+                <p><strong>Geburtsdatum:</strong> {{ account.birthdate }}</p>
+                <p><strong>Telefonnummer:</strong> {{ account.phoneNumber }}</p>
+                <button
+                  class="btn btn-primary float-left btn-custom"
+                  (click)="goToShippingDetails()"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Versanddetails Ende-->
+
+        <!-- AGB -->
+        <div class="border my-4 background-checkout-agb">
+          <h2 class="text-center mt-3 text-white">AGB</h2>
+          <div class="border m-3 rounded">
+            <div class="form-check m-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="agbCheckbox"
+                [(ngModel)]="agbAccepted"
+                name="agbCheckbox"
+              />
+              <label class="form-check-label text-white" for="agbCheckbox"
+                >Ich akzeptiere die
+                <a href="/agb" target="_blank">AGB</a></label
+              >
+              <p class="text-danger" *ngIf="showAgbError">
+                Sie müssen die AGB akzeptieren!
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- AGB Ende -->
+      </div>
+    </div>
+    <!-- Übersicht Ende-->
+
+    <div class="row mt-5">
+      <div class="col">
+        <button
+          class="btn btn-primary float-left btn-custom"
+          (click)="goBack()"
+        >
+          Zurück
+        </button>
+      </div>
+      <div class="col" *ngIf="progress != 100">
+        <button
+          class="btn btn-primary float-right btn-custom"
+          (click)="goForward()"
+        >
+          Weiter
+        </button>
+      </div>
+      <div class="col" *ngIf="progress === 100">
+        <button
+          class="btn btn-primary float-right btn-custom"
+          (click)="orderProducts()"
+        >
+          Kostenpflichtig bestellen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Abschlusseite -->
+
+<div *ngIf="showsuccess">
+  <div class="container">
+    <h1 class="text-white text-center mt-5">Bestellabschluss</h1>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Vielen Dank für Ihre Bestellung!</h5>
+        <p class="card-text">Ihre Bestellung wurde erfolgreich aufgegeben.</p>
+        <p class="card-text">Bestellnummer: {{ orderid }}</p>
+        <p class="card-text">
+          Gesamtbetrag: {{ totalPrice.toFixed(2).replace(".", ",") }} €
+        </p>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <button class="btn btn-primary btn-custom mr-5" routerLink="/home">
+        Home
+      </button>
+      <button class="btn btn-primary btn-custom mr-5" routerLink="/user">
+        Shop
+      </button>
+      <button class="btn btn-primary btn-custom" routerLink="/orders">
+        Bestellungen
+      </button>
+    </div>
+  </div>
+</div>

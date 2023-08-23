@@ -1,0 +1,174 @@
+<div class="col-md-12">
+  <div
+    class="card card-container bg-transparent text-white border rounded background-auth"
+  >
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+    <h2>Verkäufer</h2>
+
+    <!-- Emailverifizierung Form -->
+    <form
+      *ngIf="!emailVerified"
+      name="form"
+      (ngSubmit)="f.form.valid && emailVerification()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="emailForm.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div class="text-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors['required']">Email ist erforderlich</div>
+          <div *ngIf="email.errors['email']">Emailadresse nicht korrekt</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block btn-custom">
+          Email überprüfen
+        </button>
+      </div>
+    </form>
+    <!-- Emailverifizierung Form Ende -->
+
+    <!-- Registrieren Form -->
+    <form
+      *ngIf="!isSuccessful && emailVerified"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.username"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        />
+        <div class="text-danger" *ngIf="username.errors && f.submitted">
+          <div *ngIf="username.errors['required']">
+            Username ist erforderlich
+          </div>
+          <div *ngIf="username.errors['minlength']">
+            Username muss mindestens 3 Zeichen lang sein
+          </div>
+          <div *ngIf="username.errors['maxlength']">
+            Username darf höchstens 20 Zeichen lang sein
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+          disabled
+        />
+        <div class="text-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors['required']">Email ist erforderlich</div>
+          <div *ngIf="email.errors['email']">Flasche Emailadresse</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="8"
+          #password="ngModel"
+        />
+        <div class="text-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors['required']">
+            Passwort ist erforderlich
+          </div>
+          <div *ngIf="password.errors['minlength']">
+            Passwort muss mindestens 8 Zeichen lang sein!
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="verificationCode">Authentifizierungscode</label>
+        <input
+          type="password"
+          class="form-control"
+          name="verificationCode"
+          [(ngModel)]="form.verificationCode"
+          required
+          minlength="6"
+          maxlength="6"
+          #verificationCode="ngModel"
+        />
+        <div class="text-danger" *ngIf="verificationCode.errors && f.submitted">
+          <div *ngIf="verificationCode.errors['required']">
+            Authentifizierungscode ist erforderlich
+          </div>
+          <div *ngIf="verificationCode.errors['minlength']">
+            Authentifizierungscode zu kurz
+          </div>
+          <div *ngIf="verificationCode.errors['maxlength']">
+            Authentifizierungscode zu kurz lang
+          </div>
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="
+            form.verificationCode.length > 0 &&
+            !isVerificationCodeValid() &&
+            f.submitted
+          "
+        >
+          Authentifizierungscode stimmt nicht überein
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block btn-custom">Sign Up</button>
+      </div>
+
+      <div class="form-group">
+        <button
+          (click)="resetForm()"
+          class="btn btn-primary btn-block btn-custom"
+        >
+          Zurück
+        </button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+    <!-- Registrieren Form Ende --> 
+
+    <div
+      class="alert alert-success d-flex justify-content-center"
+      *ngIf="isSuccessful"
+    >
+      Registrierung erfolgreich
+    </div>
+  </div>
+</div>

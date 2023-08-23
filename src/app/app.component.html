@@ -1,41 +1,332 @@
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">bezKoder</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home </a>
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
-      </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
-      </li>
-      <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-      </li>
-    </ul>
+<div id="app" [ngClass]="{ 'light-mode': !isDarkMode }">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top border-orange">
+    <!-- Shoplogo -->
+    <a href="/home" routerLink="home"
+      ><img
+        src="../assets/Logo/logo.png"
+        style="width: 100px"
+        class="rounded mx-3"
+    /></a>
+    <!-- Shoplogo Ende-->
 
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
+    <!-- Darkmode Button -->
+    <div class="form-check form-switch mr-2">
+      <input
+        class="form-check-input fs-5"
+        type="checkbox"
+        [(ngModel)]="isDarkMode"
+        (change)="toggleMode()"
+        id="darkModeSwitch"
+        style="cursor: pointer"
+      />
+      <span *ngIf="!isDarkMode" class="bi bi-sun fs-5"></span>
+      <span *ngIf="isDarkMode" class="bi bi-moon text-white fs-5"></span>
+    </div>
+    <!-- Darkmode Button Ende-->
 
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
+    <!-- Tooglebutton für Collapsed Navbar -->
+    <button
+      class="navbar-toggler btn-custom mr-3"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Tooglebutton für Collapsed Navbar Ende -->
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul
+        class="navbar-nav d-flex align-items-center m-auto"
+        routerLinkActive="active"
+      >
+        <!-- Bestellungen -->
+        <li
+          class="nav-item my-1 mx-2"
+          *ngIf="showUserBoard && orders.length > 0"
+        >
+          <button
+            href="/orders"
+            class="btn btn-primary btn-custom"
+            routerLink="orders"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
+            <span class="bi bi-clipboard-check me-2"></span> ({{
+              orders.length
+            }})
+          </button>
+        </li>
+        <!-- Bestellungen Ende-->
+
+        <!-- Watchlist -->
+        <li
+          class="nav-item my-1 mx-2"
+          *ngIf="showUserBoard && watchlist.length > 0"
+        >
+          <button
+            href="/watchlist"
+            class="btn btn-primary btn-custom"
+            routerLink="watchlist"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
+            <span class="bi bi-heart-fill me-2 text-danger"></span> ({{
+              watchlist.length
+            }})
+          </button>
+        </li>
+        <!-- Watchlist  Ende-->
+
+        <!-- Warenkorb -->
+        <li class="nav-item my-1 mx-2" *ngIf="showUserBoard && cardlength > 0">
+          <button
+            href="/card"
+            class="btn btn-primary btn-custom"
+            routerLink="card"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
+            <span class="bi bi-cart-fill me-2"></span> ({{ cardlength }})
+          </button>
+        </li>
+        <!-- Warenkorb Ende-->
+
+        <!-- Home -->
+        <li class="nav-item my-1 mx-2">
+          <a
+            href="/home"
+            class="nav-link"
+            routerLink="home"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Home
+          </a>
+        </li>
+        <!-- Home Ende-->
+
+        <!-- Produkte freigeben -->
+        <li class="nav-item my-1 mx-2" *ngIf="showAdminBoard">
+          <a
+            href="/admin"
+            class="nav-link"
+            routerLink="admin"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Freigeben</a
+          >
+        </li>
+        <!-- Produkte freigeben Ende -->
+
+        <!-- Produkte sperren -->
+        <li class="nav-item my-1 mx-2" *ngIf="showAdminBoard">
+          <a
+            href="/lockProducts"
+            class="nav-link"
+            routerLink="lockProducts"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Sperren</a
+          >
+        </li>
+        <!-- Produkte sperren Ende -->
+
+        <!-- Newsletter -->
+        <li class="nav-item my-1 mx-2" *ngIf="showAdminBoard">
+          <a
+            href="/admin_newsletter"
+            class="nav-link"
+            routerLink="/admin_newsletter"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Newsletter</a
+          >
+        </li>
+        <!-- Newsletter Ende -->
+
+        <!-- Produkte -->
+        <li class="nav-item my-1 mx-2" *ngIf="showSellerBoard">
+          <a
+            href="/sel"
+            class="nav-link"
+            routerLink="sel"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Produkte</a
+          >
+        </li>
+        <!-- Produkte Ende-->
+
+        <!-- Dashboard Seller -->
+        <li class="nav-item my-1 mx-2" *ngIf="showSellerBoard">
+          <a
+            href="/sel_dash"
+            class="nav-link"
+            routerLink="sel_dash"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Dashboard</a
+          >
+        </li>
+        <!-- Dashboard Seller Ende -->
+
+        <!-- Shop User -->
+        <li class="nav-item my-1 mx-2" *ngIf="isLoggedIn && showUserBoard">
+          <a
+            href="/user"
+            class="nav-link"
+            routerLink="user"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Shop</a
+          >
+        </li>
+        <!-- Shop User Ende-->
+
+        <!-- Registrieren Elemente -->
+        <li class="nav-item my-1 mx-2" *ngIf="!isLoggedIn">
+          <div class="dropdown nav-link">
+            <button
+              class="dropdown-toggle dropdown-custom pl-0"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Sign Up
+            </button>
+            <div
+              class="dropdown-menu bg-dark"
+              aria-labelledby="dropdownMenuButton"
+            >
+              <a
+                href="/register"
+                class="dropdown-item text-white"
+                routerLink="register"
+                data-toggle="collapse"
+                data-target=".navbar-collapse.show"
+                >Kunde</a
+              >
+              <a
+                href="/register_as_seller"
+                class="dropdown-item text-white"
+                routerLink="register_as_seller"
+                data-toggle="collapse"
+                data-target=".navbar-collapse.show"
+                >Verkäufer</a
+              >
+            </div>
+          </div>
+        </li>
+        <!-- Registrieren Elemente Ende-->
+
+        <!-- Login -->
+        <li class="nav-item my-1 mx-2" *ngIf="!isLoggedIn">
+          <a
+            href="/login"
+            class="nav-link"
+            routerLink="login"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Login</a
+          >
+        </li>
+        <!-- Login Ende -->
+
+        <!-- ProfilImage -->
+        <li class="nav-item my-1 mx-2" *ngIf="isLoggedIn">
+          <img
+            class="rounded rounded-circle"
+            style="width: 60px; height: 60px; cursor: pointer"
+            routerLink="profile"
+            [src]="profilImage"
+            alt="profileImage"
+          />
+        </li>
+
+        <!-- Profil -->
+        <li class="nav-item my-1 mx-2" *ngIf="isLoggedIn">
+          <a
+            href="/profile"
+            class="nav-link"
+            routerLink="profile"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >{{ username }}</a
+          >
+        </li>
+
+        <!-- logout -->
+        <li class="nav-item my-1 mx-2" *ngIf="isLoggedIn">
+          <a
+            href
+            class="nav-link"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            (click)="logout()"
+            >Logout</a
+          >
+        </li>
+        <!-- logout Ende -->
+      </ul>
+    </div>
   </nav>
 
-  <div class="container">
+  <!-- Seiteninhalt -->
+  <div class="dark-mode content" [ngClass]="{ 'light-mode': !isDarkMode }">
     <router-outlet></router-outlet>
+    <app-cookie-consent></app-cookie-consent>
   </div>
+  <!-- Seiteninhalt Ende -->
+
+  <!-- Button zum Seitenanfang -->
+  <button
+    *ngIf="showScrollToTop"
+    [ngClass]="{
+      'light-mode': !isDarkMode,
+      'dark-mode': isDarkMode
+    }"
+    class="btn btn-lg scroll-to-top-btn btn-custom"
+    (click)="scrollToTop()"
+  >
+    <span class="bi bi-chevron-double-up"></span>
+  </button>
+  <!-- Button zum Seitenanfang Ende-->
+
+  <!-- Footer Rechtliches -->
+  <footer class="footer py-1 text-center fixed-bottom border-orange-t">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col p-0">
+          <a
+            href="/impressum"
+            class="dropdown-item text-white"
+            routerLink="/impressum"
+            >Impressum</a
+          >
+        </div>
+        <div class="col-auto p-0">
+          <span class="text-white">|</span>
+        </div>
+        <div class="col p-0">
+          <a href="/agb" class="dropdown-item text-white" routerLink="/agb"
+            >AGB</a
+          >
+        </div>
+        <div class="col-auto p-0">
+          <span class="text-white">|</span>
+        </div>
+        <div class="col p-0">
+          <a href="/dsgvo" class="dropdown-item text-white" routerLink="/dsgvo"
+            >DSGVO</a
+          >
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Footer Rechtliches Ende-->
 </div>

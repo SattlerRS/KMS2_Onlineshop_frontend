@@ -1,0 +1,272 @@
+<div class="container mt-4">
+  <!-- Navigation -->
+  <div class="text-center m-4">
+    <button [routerLink]="'/home'" class="btn btn-primary mx-2 btn-custom">
+      Home
+    </button>
+    <button [routerLink]="'/sel'" class="btn btn-primary mx-2 btn-custom">
+      Produkte
+    </button>
+    <button [routerLink]="'/sel_dash'" class="btn btn-primary mx-2 btn-custom">
+      Dashboard
+    </button>
+    <button [routerLink]="'/profile'" class="btn btn-primary mx-2 btn-custom">
+      Zum Profil
+    </button>
+  </div>
+  <!-- Navigation Ende-->
+
+  <!-- Produkt hinzufügen Form -->
+  <div class="row">
+    <div class="col-lg-10 col-md-8 mx-auto">
+      <div
+        class="row align-items-center md-5 mt-md-3 mb-5 pb-3 background-addProduct"
+      >
+        <div class="col-12">
+          <div class="text-white">
+            <div class="card-title text-center mt-3">
+              <h3>Produkt hinzufügen</h3>
+            </div>
+            <form
+              name="form"
+              (ngSubmit)="f.form.valid && onSubmit()"
+              #f="ngForm"
+              novalidate
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- Produktname -->
+                    <div class="form-group">
+                      <label for="productname"
+                        >Produktname: <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="productname"
+                        name="productname"
+                        [(ngModel)]="form.productname"
+                        #productname="ngModel"
+                        required
+                      />
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productname.invalid"
+                      >
+                        Produktname darf nicht leer sein
+                      </div>
+                    </div>
+
+                    <!-- Produktbeschreibung -->
+                    <div class="form-group">
+                      <label for="productdescription"
+                        >Produktbeschreibung:
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="productdescription"
+                        name="productdescription"
+                        [(ngModel)]="form.productdescription"
+                        #productdescription="ngModel"
+                        required
+                      />
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productdescription.invalid"
+                      >
+                        Produktbeschreibung darf nicht leer sein
+                      </div>
+                    </div>
+
+                    <!-- Produktkategrorie -->
+                    <div class="form-group">
+                      <label for="productcategorie"
+                        >Produktkategorie:<span class="text-danger"
+                          >*</span
+                        ></label
+                      >
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="bi bi-chevron-down"></i>
+                          </span>
+                        </div>
+                        <select
+                          class="form-control"
+                          id="productcategorie"
+                          name="productcategorie"
+                          [(ngModel)]="form.productcategorie"
+                          #productcategorie="ngModel"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            Bitte wählen
+                          </option>
+                          <option value="Makita">Makita</option>
+                          <option value="DeWalt">DeWalt</option>
+                          <option value="Hilti">Hilti</option>
+                          <option value="Bosch">Bosch</option>
+                          <option value="Milwaukee">Milwaukee</option>
+                          <option value="Einhell">Einhell</option>
+                          <option value="Festool">Festool</option>
+                        </select>
+                      </div>
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productcategorie.invalid"
+                      >
+                        Produktkategorie darf nicht leer sein
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <!-- Produktid -->
+                    <div class="form-group">
+                      <label for="productid"
+                        >Product Id: <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="productid"
+                        name="productid"
+                        [(ngModel)]="form.productid"
+                        #productid="ngModel"
+                        required
+                      />
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productid.invalid"
+                      >
+                        Produkt ID darf nicht leer sein
+                      </div>
+                    </div>
+
+                    <!-- Produktpreis -->
+                    <div class="form-group">
+                      <label for="productprice"
+                        >Produkt Preis:
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="productprice"
+                        name="productprice"
+                        pattern="[0-9]+(\.[0-9]+)?"
+                        [(ngModel)]="form.productprice"
+                        #productprice="ngModel"
+                        min="0"
+                        required
+                      />
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productprice.invalid"
+                      >
+                        Produktpreis darf nicht leer sein
+                      </div>
+                    </div>
+
+                    <!-- Produktmenge -->
+                    <div class="form-group">
+                      <label for="productamount"
+                        >Produkt Menge:
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="productamount"
+                        name="productamount"
+                        min="0"
+                        step="1"
+                        [(ngModel)]="form.productamount"
+                        #productamount="ngModel"
+                        required
+                      />
+                      <div
+                        class="validation text-danger small"
+                        *ngIf="f.submitted && productamount.invalid"
+                      >
+                        Produkt Menge darf nicht leer sein
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Produktbild -->
+                  <div class="form-group">
+                    <p>Produkt Bild: <span class="text-danger">*</span></p>
+                    <div class="custom-file">
+                      <input
+                        type="file"
+                        class="custom-file-input"
+                        id="productimage"
+                        accept="image/*"
+                        (change)="addSelectedImage($event)"
+                      />
+                      <label class="custom-file-label" for="productimage"
+                        >Bild aussuchen...</label
+                      >
+                    </div>
+                    <div
+                      class="validation text-danger small"
+                      *ngIf="f.submitted && selectedFiles.length == 0"
+                    >
+                      Sie müssen ein Bild auswählen
+                    </div>
+                  </div>
+
+                  <!-- Produktbilder -->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <div class="row">
+                        <div
+                          class="col-3 card-container d-flex"
+                          *ngFor="let image of selectedImages; let i = index"
+                        >
+                          <div class="card h-100">
+                            <img
+                              [src]="image"
+                              class="card-img-top p-2"
+                              alt="Product Image"
+                            />
+                            <div
+                              class="card-body d-flex flex-column justify-content-end position-relative m-2"
+                            >
+                              <p
+                                class="card-text position-absolute bottom-0 start-0 m-2"
+                              >
+                                {{ "Bild " + (i + 1) + " von 4" }}
+                              </p>
+                              <button
+                                class="btn btn-danger btn-sm position-absolute bottom-0 end-0 m-2 btn-custom"
+                                (click)="removeImage(i)"
+                              >
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div>
+                      <button class="btn btn-primary mx-2 mt-4 btn-custom">
+                        Hinzufügen
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Produkt hinzufügen Form Ende -->
+</div>

@@ -1,0 +1,12 @@
+<div *ngIf="showCookieConsent" class="cookie-consent my-5">
+  <p class="cookie-consent-message">
+    Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern. Durch die
+    Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.
+  </p>
+  <button class="cookie-accept-btn btn-custom" (click)="acceptCookies()">
+    Cookies akzeptieren
+  </button>
+  <button class="cookie-reject-btn btn-custom" (click)="rejectCookies()">
+    Cookies ablehnen
+  </button>
+</div>

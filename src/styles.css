@@ -1,1 +1,518 @@
-/* You can add global styles to this file, and also import other style files */
+.h1-size{
+    font-size: 60px;
+}
+.btn-width{
+    width: 300px !important;
+}
+.btn-custom {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid orange !important;
+  border-radius: 10px !important;
+}
+
+.btn-custom:hover {
+  border-color: orangered !important;
+  color: orangered !important;
+}
+
+/* NavBar Header */
+
+.navbar-dark{
+  background-color: rgb(32, 31, 31) !important;
+}
+
+.nav-link{
+    color: white !important;
+    font-size: 18px !important; 
+}
+.nav-link:hover{
+    color: orangered !important;  
+}
+
+.border-orange{
+    border-bottom: 2px solid orange !important;
+    border-color: orange !important;
+}
+
+.border-orange-t{
+    border-top: 2px solid orange !important;
+    border-color: orange !important;
+}
+
+.content{
+    min-height: 100vh !important;
+    padding-top: 100px !important;
+    padding-bottom: 80px !important;
+}
+
+.footer{
+  background-color: rgb(32, 31, 31) !important;
+}
+
+.dropdown-custom{
+    background: transparent !important;
+    color: white;
+    border: 0px;
+}
+
+.dropdown-custom:hover{
+    color: orangered ;  
+}
+.dropdown-menu{
+    border:solid 1px;
+    border-color: white;
+}
+
+.dropdown-item{
+    font-size: 18px !important;
+    border-bottom: solid 1px;
+    border-color: orange;
+}
+.dropdown-item:hover{
+    background-color:#212529 !important;
+    color: orangered !important;
+}
+.nav-item{
+    margin-right: 8px !important;
+}
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 9999;
+}
+
+
+/* Passe die Position der Dropdown-Elemente an */
+.navbar-nav .dropdown-menu a {
+    text-align: left; /* Text links ausrichten */
+    padding-left: 15px; /* Füge einen linken Abstand hinzu */
+    padding-right: 15px; /* Füge einen rechten Abstand hinzu */
+}
+
+/* NavBar Header End*/
+
+.page-link{
+  background-color: black !important;
+  color: white !important;
+  border-color: orange !important;
+}
+
+.page-link:hover{
+  color: orangered !important;
+
+}
+
+.orangered{
+  color: orangered;
+}
+
+.orange{
+  color: orange;
+}
+
+
+/* Angular Pagination */
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  color: white !important;
+  font-size: large;
+}
+
+.custom-pagination .pagination-next a:hover{
+  background-color: transparent !important;
+  color: orangered !important;
+}
+
+.custom-pagination .pagination-previous a:hover{
+  background-color: transparent !important;
+  color: orangered !important;
+}
+.custom-pagination .current{
+  background-color: transparent !important;
+}
+.custom-pagination li a:hover{
+  background-color: transparent !important;
+  color: orangered !important;
+}
+.ngx-pagination a{
+  color: white !important;
+  text-decoration: none !important;
+}
+/* Angular Pagination End*/
+
+
+.seller-link{
+  text-decoration: none;
+  color:orange;
+}
+
+.seller-link:hover{
+  color: orangered;
+}
+
+.product-link{
+    color: black;
+    text-decoration: none;
+}
+
+.product-link:hover{
+    color: orangered;
+    text-decoration: underline;
+}
+
+.forgot-password-link{
+  text-decoration: none;
+  color:orange;
+}
+
+.forgot-password-link:hover{
+  color: orangered;
+}
+
+.snackbar-custom {
+ margin-top:  18vh !important;
+}
+
+/* Darkmode */
+
+.dark-mode {
+  background-image: url('assets/Background/darkmode.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+}
+.modal-content{
+  background-color: black !important;
+  color: white !important;
+  border: 1px solid !important;
+  border-color: orange !important;
+}
+
+/* Sidebar */
+.offcanvas {
+  position: fixed !important;
+  top: 100px !important; 
+  bottom: 100px !important; 
+  left: 5px !important;
+  width:17vw !important;
+  min-width: 290px !important; 
+  z-index: 1050 !important;
+  padding-top: 2.0rem !important;
+  background-color: black !important; 
+  overflow-y: auto !important; 
+  border-radius: 20px !important;
+  border: 1px solid !important;
+  border-color: orange !important;
+  color:white !important;
+}
+
+.offcanvas-header {
+  padding: 0.5rem 1rem !important;
+  color: orangered !important;
+}
+
+.offcanvas-body {
+  padding: 1rem !important;
+}
+
+.btn-close{
+  background-color: white !important;
+}
+/* Sidebar Ende */
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+  outline: none !important; 
+}
+
+
+
+/* Lightmode */
+
+.light-mode .dark-mode {
+  background-image: url('assets/Background/lightmode.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+
+}
+
+.light-mode {
+  /* Stile für den hellen Modus */
+  background-color: white !important;
+  color: #333 !important;
+  background-image: none;
+}
+.light-mode .navbar {
+ background-color: white !important;
+ border-bottom: none !important;
+ box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .footer{
+  background-color: white !important;
+  border-top: none !important;
+  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .nav-link{
+  color: black !important;
+  font-weight: 500 !important; 
+}
+.light-mode .nav-link:hover{
+  color: goldenrod !important;
+}
+
+.light-mode .border{
+   border-color: transparent !important;
+   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .card{
+  border-color: transparent !important;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .btn-custom{
+  color: black !important;
+  background-color: white !important;
+  border-radius: 10px !important;
+  border-color:goldenrod !important;
+}
+
+.light-mode .btn-custom:hover{
+  color: white !important;
+  background-color: goldenrod !important;
+  border-color:transparent !important;
+}
+
+.light-mode .text-white{
+  color: black !important;
+  
+}
+
+.light-mode .dropdown-custom{
+  color: black !important;
+  font-weight: 500 !important; 
+  
+
+}
+.light-mode .dropdown-custom:hover{
+    color: goldenrod !important;
+}
+
+.light-mode .dropdown-item:hover{
+    background-color:white !important ;
+    color: goldenrod !important;
+}
+
+.light-mode .dropdown-menu{
+  background-color: white !important;
+  border: 1px solid !important;
+}
+.light-mode .order-background{
+  background-color:  whitesmoke !important;
+}
+.light-mode .background-kassa{
+  background-color:  white !important;
+}
+
+.light-mode .background-checkout-card{
+  background-color:  white !important;
+}
+.light-mode .background-checkout-header{
+  background-color:  rgba(255, 255, 255, 0.757) !important;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  padding: 0.5vh;
+  border-radius: 20px;
+}
+.light-mode .showproduct-custom{
+  border-color: transparent !important;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.76) !important;
+  border-radius: 10px;
+}
+
+.light-mode .background-checkout-agb{
+  background-color:  white !important;
+}
+.light-mode .paying-custom{
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 10px !important;
+  background-color: white !important;
+}
+
+.light-mode .background-checkout-delivery{
+  background-color:  white !important;
+}
+.light-mode .progress-bar{
+  background-color: goldenrod !important;
+}
+
+.light-mode .banner{
+  color: orangered !important;
+  background-color: whitesmoke !important;
+  border-color:transparent !important;
+}
+
+.light-mode .status{
+  color: white !important;
+}
+
+.light-mode .chart{
+  background-color:  rgba(0, 0, 0, 0.19) !important;
+}
+
+.light-mode .background-addProduct{
+  background-color: white !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .background-profile{
+  background-color: rgba(255, 255, 255, 0.76) !important;
+}
+.light-mode .background-editProduct{
+   background-color: rgba(255, 255, 255, 0.76) !important;
+}
+
+.light-mode .background-dashboarddetails{
+  background-color: rgba(255, 255, 255, 0.533) !important;
+}
+
+.light-mode .background-resetpassword{
+  background-color: rgba(255, 255, 255, 0.533) !important;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.light-mode .container-products{
+  box-shadow: none !important;
+}
+.light-mode .background-auth{
+  background-color: rgba(255, 255, 255, 0.76) !important;
+}
+.light-mode .banner{
+  background-color: white !important;
+  border:1px solid !important;
+  border-color: goldenrod !important;
+}
+.light-mode .orange{
+  color: black !important;
+}
+.light-mode .link{
+  color: goldenrod !important;
+}
+.light-mode .modal-content{
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid !important;
+  border-color: goldenrod !important;
+}
+.light-mode .bg-ratings{
+  background-color: rgba(255, 255, 255, 0.76) !important;
+}
+
+
+
+/* Sidebar */
+.light-mode .offcanvas {
+  position: fixed !important;
+  top: 100px !important; 
+  bottom: 100px !important; 
+  left: 5px !important;
+  width:17vw !important;
+  min-width: 290px !important; 
+  z-index: 1050 !important;
+  padding-top: 2.0rem !important;
+  background-color: white !important; 
+  overflow-y: auto !important; 
+  border-radius: 20px !important;
+  border: 1px solid !important;
+  border-color: goldenrod !important;
+  color:black !important;
+}
+
+.light-mode .offcanvas-header {
+  padding: 0.5rem 1rem !important;
+  color: goldenrod !important;
+}
+
+.light-mode .offcanvas-body {
+  padding: 1rem !important;
+}
+
+.light-mode .btn-close{
+  background-color: goldenrod !important;
+}
+
+.light-mode .rating-stars{
+  color: orange !important;
+}
+/* Sidebar Ende */
+
+
+/* Pagination */
+.light-mode .custom-pagination {
+  display: flex;
+  justify-content: center;
+  color: black;
+  font-size: large;
+  font-weight: 600;
+}
+
+.light-mode .custom-pagination .pagination-next a:hover{
+  background-color: transparent !important;
+  color: goldenrod !important;
+   font-weight: 700 !important;
+}
+
+.light-mode .custom-pagination .pagination-previous a:hover{
+  background-color: transparent !important;
+  color: goldenrod !important;
+  font-weight: 700 !important;
+}
+.light-mode .custom-pagination .current{
+  background-color: transparent !important;
+  color: lightgray !important;
+}
+.light-mode .custom-pagination li a:hover{
+  background-color: transparent !important;
+  color: goldenrod !important;
+   font-weight: 700 !important;
+}
+
+.light-mode .ngx-pagination a{
+  color: black !important;
+  text-decoration: none !important;
+}
+/* Pagination End */
+
+.light-mode .forgot-password-link{
+  text-decoration: none;
+  color:black;
+}
+
+.light-mode .forgot-password-link:hover{
+  text-decoration: underline;
+  color: orangered;
+}
+
+.light-mode .navbar-toggler{
+  background-color: gray !important;
+  border-color: goldenrod !important;
+}
+
+/* Lightmode End */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+
