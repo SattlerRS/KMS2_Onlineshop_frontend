@@ -247,7 +247,7 @@ export class CheckoutComponent implements OnInit {
       //mit Stripe
       if (this.paymentMethod === 'creditCard') {
         const paymentHandler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51NQSMoAYAs8K8FsBMRQoCVaT26bwXo3ES2yvElQYFiJQ0KyUxIN8A18US9ZNPdmQO5UbCdaTwk4vWQUZnbb5NcnH005AOOZJ7j',
+          key: '',
           locale: 'auto',
           token: function (stripeToken: any) {
             paymentStripe(stripeToken);
